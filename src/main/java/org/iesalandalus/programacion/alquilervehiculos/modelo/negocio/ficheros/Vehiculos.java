@@ -36,7 +36,7 @@ public class Vehiculos implements IVehiculos {
 	private static final String FURGONETA = "furgoneta";
 	private static Vehiculos instancia;
 
-	static Vehiculos getInstancia() {
+	 public static Vehiculos getInstancia() {
 
 		if (instancia == null) {
 
@@ -214,5 +214,7 @@ public class Vehiculos implements IVehiculos {
 		}
 
 	}
+
+	
 
 }

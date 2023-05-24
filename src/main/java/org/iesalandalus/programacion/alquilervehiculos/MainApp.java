@@ -13,9 +13,7 @@ public class MainApp {
 
 		Vista vista = procesarArgumentosVistas(args);
 
-		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.FICHEROS;
-
-		Modelo modeloCascada = new ModeloCascada(fuenteDatos);
+		Modelo modeloCascada = new ModeloCascada(procesarArgumentosFuenteDatos(args));
 
 		Controlador controlador = new Controlador(modeloCascada, vista);
 
@@ -28,13 +26,28 @@ public class MainApp {
 
 			if (argumento.equals("-vgrafica")) {
 				vista = FactoriaVista.GRAFICA.crear();
-			} else {
+			} else if (argumento.equals("-vtexto")) {
 				vista = FactoriaVista.TEXTO.crear();
 			}
 
-		
 		}
 
 		return vista;
+	}
+
+	private static FactoriaFuenteDatos procesarArgumentosFuenteDatos(String[] args) {
+		FactoriaFuenteDatos factoriaFuenteDatos = FactoriaFuenteDatos.MONGODB;
+		for (String argumento : args) {
+			if (argumento.equals("-fdficheros")) { /* Elegir que sea mediante ficheros */
+				factoriaFuenteDatos = FactoriaFuenteDatos.FICHEROS;
+			} else if (argumento.equals("-fdmongodb")) {
+				factoriaFuenteDatos = FactoriaFuenteDatos.MONGODB;
+			} else if (argumento.equals("-fdmariadb")) {
+				factoriaFuenteDatos = FactoriaFuenteDatos.MARIADB;
+			}
+
+		}
+
+		return factoriaFuenteDatos;
 	}
 }
