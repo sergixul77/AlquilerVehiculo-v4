@@ -110,11 +110,11 @@ public class LeerVehiculo extends Controlador {
 					tfCilindrada.setDisable(true); // Deshabilitar el campo de cilindrada
 				}
 			});
-
+				// Si esta en false es porque esta activo, si esta true es porque esta deshabilitado
 			tfAutobus.setOnAction(event -> {
 				if (tfAutobus.isSelected()) {
 					tfPlazas.setDisable(false); // Habilitar el campo de numero de plazas
-					tfPeso.setDisable(true); // Habilitar el campo de peso maximo
+					tfPeso.setDisable(true); // Deshabilitar el campo de peso maximo
 					tfCilindrada.setDisable(true); // Bloquar el campo de cilindrada
 				} else {
 					tfPlazas.setDisable(false); // Habilitar el campo de numero de plazas
@@ -125,10 +125,11 @@ public class LeerVehiculo extends Controlador {
 
 			tfFurgoneta.setOnAction(event -> {
 				if (tfFurgoneta.isSelected()) {
-					tfCilindrada.setDisable(true); // Bloquear el campo de cilindrada
+					tfCilindrada.setDisable(true);// Deshabilitar el campo de cilindrada
+					tfPeso.setDisable(false);// Habilitar el campo de peso
 				} else {
 					tfCilindrada.setDisable(false);// Habilitar el campo de cilindrada
-					tfPeso.setDisable(false);
+					tfPeso.setDisable(false); // Habilitar el campo de cilindrada
 				}
 			});
 		}

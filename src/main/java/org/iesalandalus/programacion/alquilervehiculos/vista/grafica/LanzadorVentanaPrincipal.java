@@ -29,7 +29,7 @@ import javafx.stage.WindowEvent;
 		        
 				Controlador ventanaPrincipal = Controladores.get("vistas/Principal.fxml", Titulo, null);
 				ventanaPrincipal.getEscenario().getIcons().add(new Image(LocalizadorRecursos.class.getResourceAsStream("imagenes/logo_blanco.png")));
-				ventanaPrincipal.getEscenario().setOnCloseRequest(e -> confirmarSalida(ventanaPrincipal.getEscenario(), e));
+				ventanaPrincipal.getEscenario().setOnCloseRequest(e -> confirmarSalida(ventanaPrincipal.getEscenario(), e)); /*Para que nos pida confirmacion a la hora de salir. */
 				ventanaPrincipal.getEscenario().show();
 			} catch (Exception e) {
 				

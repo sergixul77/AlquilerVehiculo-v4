@@ -176,6 +176,7 @@ public class ListarClientes extends Controlador {
 					modificarCliente.devolverNombre(), modificarCliente.devolverTelefono());
 			Dialogos.mostrarDialogoAdvertencia("Modificar Cliente", "Cliente modificado de forma correcta",
 					getEscenario());
+			
 		} catch (Exception e) {
 			Dialogos.mostrarDialogoError("Modificar cliente", e.getMessage(), getEscenario());
 		}

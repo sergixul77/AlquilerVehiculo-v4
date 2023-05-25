@@ -50,7 +50,7 @@ public class Vehiculos implements IVehiculos {
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(ERROR + e.getMessage());
 		}
-		return null;
+		return vehiculos;
 	}
 
 	private Vehiculo getVehiculo(ResultSet fila) throws SQLException {
@@ -81,17 +81,17 @@ public class Vehiculos implements IVehiculos {
 		sentencia.setString(3, vehiculo.getMatricula());
 
 		if (vehiculo instanceof Turismo turismo) {
-			sentencia.setString(4, TURISMO);
+			sentencia.setString(4, TURISMO); /*tipo*/
 			sentencia.setInt(5, turismo.getCilindrada());
 			sentencia.setNull(6, Types.INTEGER); /* Plazas */
 			sentencia.setNull(7, Types.INTEGER); /* PMA */
 		} else if (vehiculo instanceof Furgoneta furgoneta) {
-			sentencia.setString(4, FURGONETA);
+			sentencia.setString(4, FURGONETA);/*tipo*/
 			sentencia.setNull(5, Types.INTEGER); /* cilindrada */
 			sentencia.setInt(6, furgoneta.getPlazas());
 			sentencia.setInt(7, furgoneta.getPma());
 		} else if (vehiculo instanceof Autobus autobus) {
-			sentencia.setString(4, AUTOBUS);
+			sentencia.setString(4, AUTOBUS); /*tipo*/
 			sentencia.setNull(5, Types.INTEGER); /* cilindrada */
 			sentencia.setInt(6, autobus.getPlazas());
 			sentencia.setNull(7, Types.INTEGER); /* pma */
