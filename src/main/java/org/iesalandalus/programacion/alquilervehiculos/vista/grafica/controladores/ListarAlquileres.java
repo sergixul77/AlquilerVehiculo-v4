@@ -145,6 +145,11 @@ public class ListarAlquileres extends Controlador {
 		}
 
 	}
+	
+	   @FXML
+	    void mostrarEstadisticas(ActionEvent event) {
+
+	    }
 
 	@FXML
 	void salir(ActionEvent event) {

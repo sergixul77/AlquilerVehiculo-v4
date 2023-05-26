@@ -17,7 +17,6 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
-import org.iesalandalus.programacion.alquilervehiculos.vista.grafica.utilidades.Controlador;
 
 public class Vehiculos implements IVehiculos {
 
@@ -81,17 +80,17 @@ public class Vehiculos implements IVehiculos {
 		sentencia.setString(3, vehiculo.getMatricula());
 
 		if (vehiculo instanceof Turismo turismo) {
-			sentencia.setString(4, TURISMO); /*tipo*/
+			sentencia.setString(4, TURISMO); /* tipo */
 			sentencia.setInt(5, turismo.getCilindrada());
 			sentencia.setNull(6, Types.INTEGER); /* Plazas */
 			sentencia.setNull(7, Types.INTEGER); /* PMA */
 		} else if (vehiculo instanceof Furgoneta furgoneta) {
-			sentencia.setString(4, FURGONETA);/*tipo*/
+			sentencia.setString(4, FURGONETA);/* tipo */
 			sentencia.setNull(5, Types.INTEGER); /* cilindrada */
 			sentencia.setInt(6, furgoneta.getPlazas());
 			sentencia.setInt(7, furgoneta.getPma());
 		} else if (vehiculo instanceof Autobus autobus) {
-			sentencia.setString(4, AUTOBUS); /*tipo*/
+			sentencia.setString(4, AUTOBUS); /* tipo */
 			sentencia.setNull(5, Types.INTEGER); /* cilindrada */
 			sentencia.setInt(6, autobus.getPlazas());
 			sentencia.setNull(7, Types.INTEGER); /* pma */
@@ -102,14 +101,15 @@ public class Vehiculos implements IVehiculos {
 	@Override
 	public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		if (vehiculo == null) {
-			throw new NullPointerException("ERROR: no se puede insertar un vehiculo nulo");
+			throw new NullPointerException("ERROR: no se puede insertar un vehículo nulo");
 		}
-		try (PreparedStatement sentencia = conexion.prepareStatement("insert into vehiculos values (?, ?, ?, ?, ?, ?, ?)")) {
+		try (PreparedStatement sentencia = conexion
+				.prepareStatement("insert into vehiculos values (?, ?, ?, ?, ?, ?, ?)")) {
 			prepararSentencia(sentencia, vehiculo);
 			sentencia.execute();
 		} catch (SQLIntegrityConstraintViolationException e) {
-			throw new OperationNotSupportedException("ERROR: Ya existe un vehiculo con esa matrícula.");
-		}catch (Exception e) {
+			throw new OperationNotSupportedException("ERROR: Ya existe un vehículo con esa matrícula.");
+		} catch (Exception e) {
 			throw new IllegalArgumentException(ERROR + e.getMessage());
 		}
 
@@ -118,13 +118,13 @@ public class Vehiculos implements IVehiculos {
 	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
 		if (vehiculo == null) {
-			throw new NullPointerException("Error: No se puede buscar un vehiculo nulo ");	
+			throw new NullPointerException("Error: No se puede buscar un vehículo nulo ");
 		}
 		try (PreparedStatement sentencia = conexion.prepareStatement("select * from vehiculos where matricula = ? ")) {
 			sentencia.setString(1, vehiculo.getMatricula());
 			ResultSet filas = sentencia.executeQuery();
 			vehiculo = filas.first() ? getVehiculo(filas) : null;
-			
+
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(ERROR + e.getMessage());
 		}
@@ -134,16 +134,21 @@ public class Vehiculos implements IVehiculos {
 	@Override
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		if (vehiculo == null) {
-			throw new NullPointerException("ERROR: No se puede borrar un vehiculo nulo.");
+			throw new NullPointerException("ERROR: No se puede borrar un vehículo nulo.");
 		}
-		
+
 		try (PreparedStatement sentencia = conexion.prepareStatement("delete from vehiculos where matricula = ?")) {
 			sentencia.setString(1, vehiculo.getMatricula());
 			int filas = sentencia.executeUpdate();
 			if (filas == 0) {
-				throw new OperationNotSupportedException("ERROR: No existe ningún vehiculo con esa matricula"); /*Si es 0 te da el error, porque no existe ninguna matricula almacenada en la base de datos*/
+				throw new OperationNotSupportedException(
+						"ERROR: No existe ningún vehículo con esa matricula"); /*
+																				 * Si es 0 te da el error, porque no
+																				 * existe ninguna matricula almacenada
+																				 * en la base de datos
+																				 */
 			}
-			
+
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(ERROR + e.getMessage());
 		}

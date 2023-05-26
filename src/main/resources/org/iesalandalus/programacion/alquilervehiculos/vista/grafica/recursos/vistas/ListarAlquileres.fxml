@@ -84,6 +84,7 @@
                   <Button layoutX="34.0" layoutY="59.0" mnemonicParsing="false" onAction="#insertarAlquiler" text="Insertar Alquiler" />
                   <Button layoutX="33.0" layoutY="104.0" mnemonicParsing="false" onAction="#borrarAlquiler" text="Borrar Alquiler" />
                   <Button layoutX="32.0" layoutY="146.0" mnemonicParsing="false" onAction="#buscarAlquiler" text="Buscar Alquiler" />
+                  <Button layoutX="17.0" layoutY="188.0" mnemonicParsing="false" onAction="#mostrarEstadisticas" text="Mostrar estadisticas " />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

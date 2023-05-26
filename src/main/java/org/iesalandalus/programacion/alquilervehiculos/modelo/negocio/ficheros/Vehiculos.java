@@ -36,7 +36,7 @@ public class Vehiculos implements IVehiculos {
 	private static final String FURGONETA = "furgoneta";
 	private static Vehiculos instancia;
 
-	 public static Vehiculos getInstancia() {
+	public static Vehiculos getInstancia() {
 
 		if (instancia == null) {
 
@@ -71,10 +71,11 @@ public class Vehiculos implements IVehiculos {
 				try {
 					insertar(getVehiculo((Element) vehiculo)); // le hacemos casting a cliente de tipo node para que sea
 																// un elemento
-				} catch (OperationNotSupportedException | NullPointerException e) {
+				} catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
 
 					System.out.println(e.getMessage());
-					System.out.println(i);
+					System.out.printf("Error: Se ha producido un error al insertar el vehiculo con la posición: %s%n",
+							i);
 
 				}
 
@@ -89,13 +90,14 @@ public class Vehiculos implements IVehiculos {
 		String marca = elemento.getAttribute(MARCA);
 		String modelo = elemento.getAttribute(MODELO);
 		String matricula = elemento.getAttribute(MATRICULA);
-		if (elemento.getAttribute(TIPO).equals(TURISMO)) {
+		String tipo = elemento.getAttribute(TIPO);
+		if (tipo.equals(TURISMO)) {
 			int cilindrada = Integer.parseInt(elemento.getAttribute(CILINDRADA));
 			vehiculo = new Turismo(marca, modelo, cilindrada, matricula);
-		} else if (elemento.getAttribute(TIPO).equals(AUTOBUS)) {
+		} else if (tipo.equals(AUTOBUS)) {
 			int plazas = Integer.parseInt(elemento.getAttribute(PLAZAS));
 			vehiculo = new Autobus(marca, modelo, plazas, matricula);
-		} else if (elemento.getAttribute(TIPO).equals(FURGONETA)) {
+		} else if (tipo.equals(FURGONETA)) {
 			int plazas = Integer.parseInt(elemento.getAttribute(PLAZAS));
 			int pma = Integer.parseInt(elemento.getAttribute(PMA));
 			vehiculo = new Furgoneta(marca, modelo, pma, plazas, matricula);
@@ -214,7 +216,5 @@ public class Vehiculos implements IVehiculos {
 		}
 
 	}
-
-	
 
 }

@@ -2,7 +2,6 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.mongodb;
 
 import static com.mongodb.client.model.Filters.eq;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,34 +83,35 @@ public class Vehiculos implements IVehiculos {
 
 	Document getDocumento(Vehiculo vehiculo) {
 		Document documento = null;
-		
+
 		if (vehiculo != null) {
-			
+
 			String marca = vehiculo.getMarca();
 			String modelo = vehiculo.getModelo();
 			String matricula = vehiculo.getMatricula();
-		
-			if (vehiculo instanceof Turismo turismo) { /*Crea una nueva instancia de turismo*/
+
+			if (vehiculo instanceof Turismo turismo) { /* Crea una nueva instancia de turismo */
 				int cilindrada = turismo.getCilindrada();
-				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca).append(CILINDRADA, cilindrada).append(TIPO, TURISMO);
+				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca)
+						.append(CILINDRADA, cilindrada).append(TIPO, TURISMO);
 			} else if (vehiculo instanceof Furgoneta furgoneta) {
 				int pma = furgoneta.getPma();
 				int plazas = furgoneta.getPlazas();
-				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca).append(PMA, pma).append(PLAZAS, plazas).append(TIPO, FURGONETA);
+				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca)
+						.append(PMA, pma).append(PLAZAS, plazas).append(TIPO, FURGONETA);
 			} else if (vehiculo instanceof Autobus autobus) {
 				int plazas = autobus.getPlazas();
-				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca).append(PLAZAS, plazas).append(TIPO,AUTOBUS);
+				documento = new Document().append(MATRICULA, matricula).append(MODELO, modelo).append(MARCA, marca)
+						.append(PLAZAS, plazas).append(TIPO, AUTOBUS);
 			}
 		}
 		return documento;
 	}
-	
-	
-	
-	private Bson getCriterioBusqueda (Vehiculo vehiculo) {
-		
+
+	private Bson getCriterioBusqueda(Vehiculo vehiculo) {
+
 		return eq(MATRICULA, vehiculo.getMatricula());
-		
+
 	}
 
 	@Override
@@ -125,21 +125,22 @@ public class Vehiculos implements IVehiculos {
 	@Override
 	public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		if (vehiculo == null) {
-			throw new NullPointerException("Error: No se puede insertar un vehiculo que esta nulo.");
+			throw new NullPointerException("Error: No se puede insertar un vehículo que esta nulo.");
 		}
 		FindOneAndReplaceOptions opciones = new FindOneAndReplaceOptions().upsert(true);
-		Document resultado = coleccionVehiculos.findOneAndReplace(getCriterioBusqueda(vehiculo),getDocumento(vehiculo),opciones);
-		
+		Document resultado = coleccionVehiculos.findOneAndReplace(getCriterioBusqueda(vehiculo), getDocumento(vehiculo),
+				opciones);
+
 		if (resultado != null) {
-			throw new OperationNotSupportedException("ERROR: Ya existe un vehiculo con esa matrícula.");
+			throw new OperationNotSupportedException("ERROR: Ya existe un vehículo con esa matrícula.");
 		}
-		
+
 	}
 
 	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
 		if (vehiculo == null)
-			throw new NullPointerException("Error: No se puede buscar un vehiculo nulo ");
+			throw new NullPointerException("Error: No se puede buscar un vehículo nulo ");
 
 		return getVehiculo(coleccionVehiculos.find(getCriterioBusqueda(vehiculo)).first());
 	}
@@ -147,12 +148,12 @@ public class Vehiculos implements IVehiculos {
 	@Override
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		if (vehiculo == null) {
-			throw new NullPointerException("Error: No se puede borrar un vehiculo nulo ");
+			throw new NullPointerException("Error: No se puede borrar un vehículo nulo ");
 		}
 
 		DeleteResult resultado = coleccionVehiculos.deleteOne(getCriterioBusqueda(vehiculo));
 		if (resultado.getDeletedCount() == 0) {
-			throw new OperationNotSupportedException("Error: No existe ningun vehiculo con esa matricula");
+			throw new OperationNotSupportedException("Error: No existe ningun vehículo con esa matricula");
 		}
 
 	}

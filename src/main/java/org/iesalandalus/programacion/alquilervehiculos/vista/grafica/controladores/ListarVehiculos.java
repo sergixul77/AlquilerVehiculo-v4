@@ -1,6 +1,9 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.grafica.controladores;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
@@ -168,9 +171,11 @@ public class ListarVehiculos extends Controlador {
 				VistaGrafica.getInstancia().getControlador().borrar(vehiculo);
 				tvVehiculo.getItems().remove(vehiculo);
 				Dialogos.mostrarDialogoAdvertencia("Borrar Vehiculo", "Vehiculo borrado correctamente", getEscenario());
+			} else {
+				Dialogos.mostrarDialogoError("Error", "No existe ningún vehículo con esa matrícula", getEscenario());
 			}
 
-		} catch (Exception e) {
+		} catch (OperationNotSupportedException | NullPointerException e) {
 			Dialogos.mostrarDialogoError("Borrar Vehiculo ", e.getMessage(), getEscenario());
 		}
 
@@ -185,23 +190,30 @@ public class ListarVehiculos extends Controlador {
 
 		try {
 			String matricula = buscarVehiculo.getMatricula();
+
 			if (!matricula.isBlank()) {
 				Vehiculo vehiculo = VistaGrafica.getInstancia().getControlador()
 						.buscar(Vehiculo.getVehiculoConMatricula(matricula));
-				tfMarca.setText(vehiculo.getMarca());
-				tfModelo.setText(vehiculo.getModelo());
-				tfMatricula.setText(vehiculo.getMatricula());
-				// Formatero y establezco la cilindrada del vehiculo
-				String cilindradaFormateada = formateoCilindrada(vehiculo);
-				tfCilindrada.setText(cilindradaFormateada);
-				// Formatero y establezco las plazas del vehiculo
-				String plazasFormateadas = formateoPlazas(vehiculo);
-				tfPlazas.setText(plazasFormateadas);
-				// Formateo y establezco el pma del vehiculo
-				String pmaFormateado = formatearPma(vehiculo);
-				tfPma.setText(pmaFormateado);
+				if (vehiculo != null) {
+					tfMarca.setText(vehiculo.getMarca());
+					tfModelo.setText(vehiculo.getModelo());
+					tfMatricula.setText(vehiculo.getMatricula());
+					// Formatero y establezco la cilindrada del vehiculo
+					String cilindradaFormateada = formateoCilindrada(vehiculo);
+					tfCilindrada.setText(cilindradaFormateada);
+					// Formatero y establezco las plazas del vehiculo
+					String plazasFormateadas = formateoPlazas(vehiculo);
+					tfPlazas.setText(plazasFormateadas);
+					// Formateo y establezco el pma del vehiculo
+					String pmaFormateado = formatearPma(vehiculo);
+					tfPma.setText(pmaFormateado);
+				} else {
+					Dialogos.mostrarDialogoError("Error", "No existe ningún vehículo con esa matrícula",
+							getEscenario());
+				}
 			}
 		} catch (Exception e) {
+
 			Dialogos.mostrarDialogoError("Error", e.getMessage(), getEscenario());
 		}
 	}

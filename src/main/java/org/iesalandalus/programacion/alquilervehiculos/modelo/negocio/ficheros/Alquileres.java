@@ -6,6 +6,7 @@ import java.io.File;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,25 +71,24 @@ public class Alquileres implements IAlquileres {
 	}
 
 	private void leerDom(Document documentoXml) {
-
 		NodeList alquileres = documentoXml.getElementsByTagName(ALQUILER);
 		for (int i = 0; i < alquileres.getLength(); i++) {
 			Node alquiler = alquileres.item(i);
 			if (alquiler.getNodeType() == Node.ELEMENT_NODE) {
-
+				String cadenaErrorAlquiler = String.format(
+						"ERROR: Se ha producido un error al insertar el alquiler que ocupa la posición: %s%n", i);
 				try {
-					insertar(getAlquiler((Element) alquiler)); // le hacemos casting a cliente de tipo node para que sea
-																// un elemento
-				} catch (OperationNotSupportedException | NullPointerException e) {
-
+					insertar(getAlquiler(((Element) alquiler)));
+				} catch (DateTimeParseException e) {
+					System.out.println("ERROR: no se ha podido poner la fecha.");
+					System.out.print(cadenaErrorAlquiler);
+				} catch (Exception e) {
 					System.out.println(e.getMessage());
-					System.out.println(i);
-
+					System.out.print(cadenaErrorAlquiler);
 				}
 
 			}
 		}
-
 	}
 
 	private Alquiler getAlquiler(Element elemento) throws OperationNotSupportedException {
@@ -150,7 +150,7 @@ public class Alquileres implements IAlquileres {
 		elementoAlquiler.setAttribute(FECHA_ALQUILER, alquiler.getFechaAlquiler().format(FORMATO_FECHA));
 		elementoAlquiler.setAttribute(VEHICULO, alquiler.getVehiculo().getMatricula());
 		LocalDate fechaDevolucion = alquiler.getFechaDevolucion();
-		if (fechaDevolucion!= null) {
+		if (fechaDevolucion != null) {
 			elementoAlquiler.setAttribute(FECHA_DEVOLUCION, String.format("%s", fechaDevolucion.format(FORMATO_FECHA)));
 		}
 		return elementoAlquiler;

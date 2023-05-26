@@ -70,10 +70,13 @@ public class Clientes implements IClientes {
 				try {
 					insertar(getCliente((Element) cliente)); // le hacemos casting a cliente de tipo node para que sea
 																// un elemento
-				} catch (OperationNotSupportedException | NullPointerException e) {
+				} catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
 
 					System.out.println(e.getMessage());
-					System.out.println(i);
+					System.out.printf("Error: Se ha producido un error al insertar el cliente con la posición %s%n",
+							i); /*
+								 * Formateo el mensaje para indicar en que cliente se ha producido el error.
+								 */
 
 				}
 

@@ -27,7 +27,7 @@ public class Cliente {
 	public Cliente (Cliente cliente) { /*Constructor copia*/
 		
 			if (cliente == null) { /*Tengo que revisar que el cliente sea nulo, si es nulo, salta una excepcion */
-				throw new NullPointerException("ERROR: No es posible copiar un cliente nulo.");
+				throw new NullPointerException("ERROR: El cliente que has introducido no existe");
 			}
 			
 				nombre = cliente.getNombre();
