@@ -147,7 +147,7 @@ public class ListarVehiculos extends Controlador {
 			Vehiculo vehiculo = insertarVehiculo.getVehiculo();
 			if (vehiculo != null) {
 				VistaGrafica.getInstancia().getControlador().insertar(vehiculo);
-				Dialogos.mostrarDialogoAdvertencia("Insertar Vehiculo", "Vehiculo insertado correctamente",
+				Dialogos.mostrarDialogoAdvertencia("Insertar Vehiculo", "Vehículo insertado correctamente",
 						getEscenario());
 				tvVehiculo.getItems().add(vehiculo);
 			}
@@ -170,7 +170,7 @@ public class ListarVehiculos extends Controlador {
 			if (vehiculo != null) {
 				VistaGrafica.getInstancia().getControlador().borrar(vehiculo);
 				tvVehiculo.getItems().remove(vehiculo);
-				Dialogos.mostrarDialogoAdvertencia("Borrar Vehiculo", "Vehiculo borrado correctamente", getEscenario());
+				Dialogos.mostrarDialogoAdvertencia("Borrar Vehiculo", "Vehículo borrado correctamente", getEscenario());
 			} else {
 				Dialogos.mostrarDialogoError("Error", "No existe ningún vehículo con esa matrícula", getEscenario());
 			}

@@ -74,7 +74,7 @@ public class Vehiculos implements IVehiculos {
 				} catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
 
 					System.out.println(e.getMessage());
-					System.out.printf("Error: Se ha producido un error al insertar el vehiculo con la posición: %s%n",
+					System.out.printf("Error: Se ha producido un error al insertar el vehículo con la posición: %s%n",
 							i);
 
 				}

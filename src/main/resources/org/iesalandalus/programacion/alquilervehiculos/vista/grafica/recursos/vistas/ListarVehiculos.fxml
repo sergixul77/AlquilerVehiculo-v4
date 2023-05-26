@@ -102,6 +102,7 @@
                               <TableColumn fx:id="tcPma" prefWidth="82.6666259765625" text="PMA" />
                           </columns>
                         </TableView>
+                        <Button layoutX="194.0" layoutY="484.0" mnemonicParsing="false" onAction="#salir" styleClass="boton_cancelar" stylesheets="@../estilos/javafx.css" text="Salir" />
               </children>
             </AnchorPane>
           </content>
